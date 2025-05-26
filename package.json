@@ -23,6 +23,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "stylelint": "stylelint \"**/*.css\""
   },
   "eslintConfig": {
