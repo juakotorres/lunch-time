@@ -1,8 +1,8 @@
 # Lunch Time!
 
-Is there any time were you cannot decide where to eat? Then this app is what you are looking for, it helps you pick a restaurant close to your location. 
+Is there any time were you cannot decide where to eat? Then this app is what you are looking for, it helps you pick a restaurant close to your location.
 
-The main features provided are restaurant search by keyword near you area and restaurant details containing pictures of dishes and the menu. More features to come! 
+The main features provided are restaurant search by keyword near you area and restaurant details containing pictures of dishes and the menu. More features to come!
 
 ## How to run the project?
 
@@ -58,7 +58,7 @@ You can build the image:
 docker build -t lunch-time-app .
 ```
 
-The next steps is to push the image, and this needs configurations from the server. 
+The next steps is to push the image, and this needs configurations from the server.
 
 ## Using npm
 
