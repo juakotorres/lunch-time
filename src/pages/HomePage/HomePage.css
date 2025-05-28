@@ -1,0 +1,13 @@
+.home-page-container {
+  display: flex;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background-color: var(--color-secondary-container);
+  border-bottom: 1px solid var(--color-outline-variant);
+  border-right: 1px solid var(--color-outline-variant);
+}
