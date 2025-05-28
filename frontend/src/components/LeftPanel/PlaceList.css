@@ -1,0 +1,6 @@
+.place-list {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  gap: 4px;
+}
