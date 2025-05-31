@@ -19,7 +19,11 @@ export function PlaceList({ places, isLoading, isError, error }: PlaceListProps)
 
   return (
     <div className="place-list">
-      {places?.businesses.map((business) => <strong key={business.id}>{business.name}</strong>)}
+      {places?.businesses.map((business) => (
+        <strong key={business.id} data-cy="place-card">
+          {business.name}
+        </strong>
+      ))}
     </div>
   );
 }
