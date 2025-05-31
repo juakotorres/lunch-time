@@ -1,5 +1,5 @@
 import placeSearchResponseFactory from 'factory/place-search-response';
-import placeSearchResultFactory from '../factory/place-search-result';
+import placeSearchResultFactory from 'factory/place-search-result';
 import { mockPlaceSearch, mockPlaceSearchError } from 'intercepts/places';
 
 describe('Home Page', () => {

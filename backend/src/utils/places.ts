@@ -14,8 +14,14 @@ export interface PlaceSearchResult {
   };
   rating: number;
   userRatingCount: number;
+  nationalPhoneNumber?: string;
   reviews?: PlaceReview[];
   photos?: PlacePhoto[];
+}
+
+export interface PlacePhotoMediaResponse {
+  name: string;
+  photoUri: string;
 }
 
 interface PlaceReview {
@@ -32,8 +38,14 @@ interface LocalizedText {
   text: string;
   languageCode: string;
 }
+
 interface PlacePhoto {
   name: string;
   flagContentUri: string;
   googleMapsUri: string;
+  authorAttributions: {
+    displayName: string;
+    photoUri: string;
+    uri: string;
+  }[];
 }

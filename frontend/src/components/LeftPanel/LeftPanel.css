@@ -24,3 +24,12 @@
   font-size: 6px;
   color: var(--color-on-surface);
 }
+
+.back-arrow {
+  height: 20px;
+  margin-right: 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

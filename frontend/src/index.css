@@ -17,6 +17,9 @@ code {
   --color-on-surface: #181c1f;
   --color-outline: #71787e;
   --color-outline-variant: #c1c7ce;
+  --color-surface-container-highest: #dfe3e7;
   --color-surface-container-high: #e5e8ed;
+  --color-surface-container: #ebeef3;
+  --color-surface-container-low: #f0f4f8;
   --color-surface-container-lowest: #fff;
 }

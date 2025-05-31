@@ -14,11 +14,17 @@ export interface PlaceSearchResult {
   };
   rating: number;
   userRatingCount: number;
+  nationalPhoneNumber?: string;
   reviews?: PlaceReview[];
   photos?: PlacePhoto[];
 }
 
-interface PlaceReview {
+export interface PlacePhotoMediaResponse {
+  name: string;
+  photoUri: string;
+}
+
+export interface PlaceReview {
   name: string;
   text: LocalizedText;
   rating: number;
@@ -33,8 +39,13 @@ interface LocalizedText {
   languageCode: string;
 }
 
-interface PlacePhoto {
+export interface PlacePhoto {
   name: string;
   flagContentUri: string;
   googleMapsUri: string;
+  authorAttributions: {
+    displayName: string;
+    photoUri: string;
+    uri: string;
+  }[];
 }

@@ -8,9 +8,16 @@ interface PlaceListProps {
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
+  onSelectedPlace: (placeId: string) => void;
 }
 
-export function PlaceList({ placeSearchResponse, isLoading, isError, error }: PlaceListProps) {
+export default function PlaceList({
+  placeSearchResponse,
+  isLoading,
+  isError,
+  error,
+  onSelectedPlace,
+}: PlaceListProps) {
   const noPlacesFound =
     !placeSearchResponse || !placeSearchResponse.places || placeSearchResponse.places.length === 0;
 
@@ -22,7 +29,9 @@ export function PlaceList({ placeSearchResponse, isLoading, isError, error }: Pl
       {isError && <p>Error requesting places: {String(error)}</p>}
       {!isLoading && !isError && noPlacesFound && <p>No places found.</p>}
       {canShowData &&
-        placeSearchResponse?.places.map((place) => <PlaceCard key={place.id} place={place} />)}
+        placeSearchResponse?.places.map((place) => (
+          <PlaceCard key={place.id} place={place} onSelectedPlace={onSelectedPlace} />
+        ))}
     </div>
   );
 }
