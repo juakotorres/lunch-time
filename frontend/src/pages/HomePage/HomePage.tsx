@@ -1,14 +1,9 @@
-import { LatLng } from '../../api/search';
 import LeftPanel from '../../components/LeftPanel/LeftPanel';
 import MapContainer from '../../components/MapContainer/MapContainer';
+import { STARTING_LOCATION } from '../../constants/location';
 import { usePlacesSearch } from '../../hooks/usePlacesSearch';
 
 import './HomePage.css';
-
-const STARTING_LOCATION: LatLng = {
-  lat: 35.66472178111948,
-  lng: 139.73780370654634,
-};
 
 function HomePage() {
   const { data, isLoading, error, isError } = usePlacesSearch({ location: STARTING_LOCATION });
