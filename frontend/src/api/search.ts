@@ -1,4 +1,4 @@
-import { PlaceSearchResponse } from './places';
+import { PlacePhotoMediaResponse, PlaceSearchResponse, PlaceSearchResult } from './places';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? 'http://localhost:3001';
 
@@ -33,5 +33,35 @@ export async function searchPlaces(
   }
 
   const data: PlaceSearchResponse = await response.json();
+  return data;
+}
+
+export async function fetchPlaceDetails(placeId: string): Promise<PlaceSearchResult> {
+  const response = await fetch(`${BACKEND_URL}/places/${placeId}`, {
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Backend API error');
+  }
+
+  const data: PlaceSearchResult = await response.json();
+  return data;
+}
+
+export async function fetchPlacePhoto(photoRoute: string): Promise<PlacePhotoMediaResponse> {
+  const response = await fetch(`${BACKEND_URL}/${photoRoute}`, {
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Backend API error');
+  }
+
+  const data: PlacePhotoMediaResponse = await response.json();
   return data;
 }

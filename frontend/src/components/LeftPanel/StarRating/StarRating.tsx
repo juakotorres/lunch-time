@@ -4,13 +4,14 @@ import filledStar from '../../../assets/filled-star.png';
 
 interface StarRatingProps {
   rating: number;
-  count: number;
+  count?: number;
+  hideNumber?: boolean;
 }
 
-export default function StarRating({ rating, count }: StarRatingProps) {
+export default function StarRating({ rating, count, hideNumber }: StarRatingProps) {
   return (
     <div className="star-rating">
-      <strong>{rating}</strong>
+      {!hideNumber && <strong>{rating}</strong>}
       {Array.from({ length: 5 }).map((_, index) => (
         <img
           key={index}
@@ -20,7 +21,7 @@ export default function StarRating({ rating, count }: StarRatingProps) {
           alt="rating-star"
         />
       ))}
-      <strong>({count})</strong>
+      {count && <strong>({count})</strong>}
     </div>
   );
 }
