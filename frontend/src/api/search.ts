@@ -1,4 +1,4 @@
-import { YelpSearchResponse } from './yelp';
+import { PlaceSearchResponse } from './places';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? 'http://localhost:3001';
 
@@ -9,17 +9,18 @@ export interface LatLng {
 
 export async function searchPlaces(
   location: LatLng,
-  query: string = 'restaurant',
-  radius: number = 1000,
-  limit: number = 10
-): Promise<YelpSearchResponse> {
+  query?: string,
+  type: string = 'restaurant',
+  radius: number = 1000
+): Promise<PlaceSearchResponse> {
   const queryParams = new URLSearchParams({
     lat: location.lat.toString(),
     lng: location.lng.toString(),
-    term: query,
+    type,
     radius: radius.toString(),
-    limit: limit.toString(),
   });
+
+  if (query) queryParams.append('query', query);
 
   const response = await fetch(`${BACKEND_URL}/places?${queryParams}`, {
     headers: {
@@ -31,6 +32,6 @@ export async function searchPlaces(
     throw new Error('Backend API error');
   }
 
-  const data: YelpSearchResponse = await response.json();
+  const data: PlaceSearchResponse = await response.json();
   return data;
 }

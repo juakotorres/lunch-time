@@ -6,11 +6,13 @@
   min-height: 100%;
   height: 100vh;
   gap: 16px;
+  background-color: var(--color-surface);
 }
 
 .content {
   flex: 1;
   overflow-y: auto;
+  padding: 0 8px;
 }
 
 .logo {

@@ -1,10 +1,10 @@
-import { YelpSearchResponse } from '../../api/yelp';
+import { PlaceSearchResponse } from '../../api/places';
 import logo from '../../assets/logo.png';
 import './LeftPanel.css';
-import { PlaceList } from './PlaceList';
+import { PlaceList } from './PlaceList/PlaceList';
 
 interface LeftPanelProps {
-  places?: YelpSearchResponse;
+  placeSearchResponse?: PlaceSearchResponse;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;

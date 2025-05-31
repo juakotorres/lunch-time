@@ -3,7 +3,7 @@ import L from 'leaflet';
 
 import './MapContainer.css';
 import { LatLng } from '../../api/search';
-import { YelpSearchResponse } from '../../api/yelp';
+import { PlaceSearchResponse } from '../../api/places';
 import marker from '../../assets/marker.png';
 
 const LocationMarker = L.icon({
@@ -15,10 +15,10 @@ const LocationMarker = L.icon({
 
 interface MapContainerProps {
   location: LatLng;
-  places?: YelpSearchResponse;
+  placeSearchResponse?: PlaceSearchResponse;
 }
 
-export default function MapContainer({ location, places }: MapContainerProps) {
+export default function MapContainer({ location, placeSearchResponse }: MapContainerProps) {
   return (
     <div className="map-container" data-cy="map-container">
       <LeafletMapContainer center={[location.lat, location.lng]} zoom={15}>
@@ -26,14 +26,14 @@ export default function MapContainer({ location, places }: MapContainerProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {places &&
-          places.businesses.map((business) => (
+        {!!placeSearchResponse?.places &&
+          placeSearchResponse.places.map(({ id, displayName, location }) => (
             <Marker
-              key={business.id}
-              position={[business.coordinates.latitude, business.coordinates.longitude]}
+              key={id}
+              position={[location.latitude, location.longitude]}
               icon={LocationMarker}
             >
-              <Popup>{business.name}</Popup>
+              <Popup>{displayName.text}</Popup>
             </Marker>
           ))}
       </LeafletMapContainer>

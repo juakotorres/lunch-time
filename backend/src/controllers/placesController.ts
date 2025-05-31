@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { fetchYelpPlaces } from '../services/yelpService';
+import { fetchNearbyPlaces } from '../services/searchNearbyService';
+import { fetchPlacesByText } from '../services/searchTextService';
 
 export async function getPlaces(req: Request, res: Response): Promise<void> {
-  const { lat, lng, term, radius, limit } = req.query;
+  const { lat, lng, radius, type, query } = req.query;
 
   if (!lat || !lng) {
     res.status(400).json({ error: 'lat and lng are required' });
@@ -10,16 +11,26 @@ export async function getPlaces(req: Request, res: Response): Promise<void> {
   }
 
   try {
-    const data = await fetchYelpPlaces(
-      lat.toString(),
-      lng.toString(),
-      term?.toString(),
-      radius?.toString(),
-      limit?.toString()
-    );
-    res.status(200).json(data);
+    if (query && query !== '') {
+      const data = await fetchPlacesByText(
+        lat.toString(),
+        lng.toString(),
+        query.toString(),
+        type?.toString(),
+        radius ? parseFloat(radius?.toString()) : undefined
+      );
+      res.status(200).json(data);
+    } else {
+      const data = await fetchNearbyPlaces(
+        lat.toString(),
+        lng.toString(),
+        type?.toString(),
+        radius ? parseFloat(radius?.toString()) : undefined
+      );
+      res.status(200).json(data);
+    }
   } catch (error) {
-    console.error('Error fetching Yelp data:', error);
+    console.error('Error fetching Places data:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
