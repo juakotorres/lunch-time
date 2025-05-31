@@ -1,0 +1,31 @@
+.place-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 10px 16px;
+  gap: 4px;
+}
+
+.place-card:hover {
+  background-color: var(--color-surface-container-high);
+  cursor: pointer;
+}
+
+.place-name {
+  font-size: 16px;
+  color: var(--color-on-surface);
+}
+
+.place-address {
+  font-size: 12px;
+  color: var(--color-outline);
+}
+
+.place-card-divider {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-bottom: 1px solid var(--color-outline-variant);
+  margin-top: 6px;
+  padding: 0;
+}
