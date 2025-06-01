@@ -1,6 +1,7 @@
 import { PlacePhotoMediaResponse } from '../utils/places';
 import { API_KEY } from '../config/env';
 import { fetch } from '../utils/fetch';
+import { AppError } from '../middleware/errorHandler';
 
 const PLACE_DETAILS_API = 'https://places.googleapis.com/v1/places';
 
@@ -22,7 +23,7 @@ export async function fetchPlacePhoto(
   );
 
   if (!response.ok) {
-    throw new Error(`Place Photos API error: ${response.statusText}`);
+    throw new AppError(`Place Photos API error: ${response.statusText}`, 500);
   }
 
   const data = (await response.json()) as PlacePhotoMediaResponse;
