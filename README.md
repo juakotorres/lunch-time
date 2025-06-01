@@ -1,71 +1,208 @@
 # Lunch Time!
 
-Is there any time were you cannot decide where to eat? Then this app is what you are looking for, it helps you pick a restaurant close to your location.
+Lunch Time is a simple web application that helps users discover nearby restaurants through a random selection of 20 options around a fixed location. It displays them on a map, allows keyword searches, and offers detailed views with photos, reviews, and routing via Google Maps.
 
-The main features provided are restaurant search by keyword near you area and restaurant details containing pictures of dishes and the menu. More features to come!
+## Challenge
 
-## How to run the project?
+When deciding where to eat, many people struggle with choice overload. Lunch Time simplifies this by randomly selecting nearby restaurants and presenting them with useful visual and contextual information.
 
-### Using docker compose
+This project was also designed as a full-stack technical exercise to showcase clean architecture, testing practices, CI/CD pipelines, and structured frontend/backend separation with modern web tools.
 
-Build the project first if you have not built it before:
+## Main features
 
-```bash
-docker-compose up --build
+- 📍 Display 20 restaurants around a fixed location.
+- 🗺️ Interactive map (via Leaflet) showing pins for each restaurant and the user's current location.
+- 🔍 Search restaurants by keyword.
+- 📋 View a list of restaurants with ratings and addresses.
+- ℹ️ View detailed info on each restaurant (photos, reviews, directions).
+
+🎨 [Figma design available here](https://www.figma.com/design/9WnLD0bXpGokT1vpa5Q42E/Lunch-Time-?node-id=2019-1086&t=PrTgwJmcKE4BjVmE-1)
+
+![Demo](./assets/demo.png)
+
+### Incoming Features!
+
+- Add restaurant type filters (e.g., sushi, cafe)
+- Enable sorting by rating or distance
+- Integrate routing/navigation using Google Maps
+- Improve mobile responsiveness and UX for small screens
+
+## Technologies Used
+
+| Layer    | Tech Used                                 |
+| -------- | ----------------------------------------- |
+| Frontend | React, TypeScript, React Leaflet, Cypress |
+| Backend  | Node.js, Express                          |
+| API      | Google Places API                         |
+| CI/CD    | GitHub Actions                            |
+| Testing  | Jest, Cypress, Fishery                    |
+| Quality  | ESLint, Prettier, Stylelint               |
+
+## Getting Started
+
+### Environment Variables
+
+For local development, create a .env.development.local file in both the frontend/ and backend/ directories.
+
+**Backend (/backend/.env.development.local)**
+
+```
+API_KEY=your_places_api_key
+PORT=3001 # Optional - defaults to 3001 if omitted
 ```
 
-You can run the project using:
+`API_KEY` is required to authenticate with the Google Places API. You can obtain one from the [Google Cloud Console](https://console.cloud.google.com/)
 
-```bash
-docker-compose up
+**Frontend (/frontend/.env.development.local)**
+
+```
+REACT_APP_BACKEND_URL=http://localhost:3001
 ```
 
-### Using npm
+This URL points to the local backend proxy server. Ensure the backend is running before starting the frontend.
 
-Before running the project, install the dependencies if you haven't:
+### How to run the project?
 
-```bash
-npm install
-```
+**Using Docker Compose**
 
-After dependencies are installed, you can run the project with:
+This will run both the **frontend** and **backend** services using their respective `Dockerfile`s located in `/frontend` and `/backend`.
 
-```bash
-npm start
-```
-
-This command runs the app in the development mode. You can load the app by opening in [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page has hotload so it will reload for any edit. You will also see any lint errors in the console.
-
-## How to run the tests?
-
-You can run the tests with:
+For first time setting up:
 
 ```bash
-npm test
+docker-compose up -d --build
 ```
 
-This launches the test runner in the interactive watch mode.
+In next instances you can run it using:
 
-## How to build the app?
+```bash
+docker-compose up -d
+```
 
-## Using docker
+The services will be available at:
+
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
+
+### How to run the tests?
+
+From the root, you can run tests separately for each service.
+
+**Frontend Functional Tests**
+
+For Cypress tests you need to have the application running on the background, so please make sure you could load the app in the previous step.
+
+```bash
+cd frontend
+npm run cy:open
+```
+
+This launches the cypress UI in the interactive watch mode.
+
+**Backend Unit Tests**
+
+```bash
+cd backend
+npm run test
+```
+
+This will run all unit tests inside the backend folder.
+
+### How to build the app?
+
+#### Using docker (WIP)
 
 You can build the image:
 
 ```bash
-docker build -t lunch-time-app .
+docker-compose build
 ```
 
-The next steps is to push the image, and this needs configurations from the server.
+This will build both frontend and backend containers using their respective Dockerfiles.
 
-## Using npm
+If you prefer to build each image manually:
+
+```
+docker build -t lunch-time-frontend ./frontend
+docker build -t lunch-time-backend ./backend
+```
+
+Note: Pushing images to a remote server will require proper Docker registry credentials and server setup. (Not setup)
+
+#### Using npm
 
 You can do that by running:
 
 ```bash
+cd frontend
 npm run build
 ```
 
 This will build the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
+
+## Technical Decisions & Reasoning
+
+### Frontend-Only → Full-Stack
+
+Initially planned as a frontend-only app, it evolved into a full-stack app after realizing API keys needed to be secured. A backend proxy (Node.js + Express) was added to handle external API requests securely.
+
+### Map Implementation
+
+Used React Leaflet to avoid Google Maps' quotas and complexity. If switching to Google Maps becomes necessary later, the map component is abstracted and can be replaced with minimal effort.
+
+### Places API Selection
+
+- Started with Yelp: Easy signup, but restricted review access at free tier.
+- Foursquare: No access after a week of waiting.
+- Final Choice: Google Places API: Complete documentation, wide feature set, and better support for reviews and photos.
+
+### Code Quality & Testing
+
+- Added ESLint, Prettier, and Stylelint to enforce consistency and catch issues early.
+- CI pipeline runs 4 jobs:
+  - Frontend: quality control and functional tests.
+  - Backend: quality control and unit tests.
+- tests only run after code quality checks to save CI resources.
+- Used Fishery for flexible, mockable test data across unit and functional tests.
+  - Pros: Environment control and faster test runs.
+  - Cons: Not true end-to-end testing; plan to add real E2E tests later.
+
+### State Management
+
+Opted to use React Context for shared state. Redux would offer better structure for scaling, but was skipped due to time constraints and app size. A known limitation is unnecessary re-renders and deeply nested contexts — would refactor if continuing.
+
+## Project Structure
+
+### Frontend
+
+```
+/src
+  ├── api/         # Fetch wrappers for backend communication
+  ├── assets/      # Images or static assets
+  ├── components/  # Reusable UI components
+  ├── contexts/    # React Context providers
+  ├── hooks/       # Custom hooks
+  ├── pages/       # App views and routes
+```
+
+### Backend
+
+```
+/src
+  ├── routes/      # Express route definitions
+  ├── services/    # Abstractions for external API calls (e.g., Google Places)
+  ├── utils/       # Helper functions
+  └── app.ts       # App entry point
+  └── server.ts    # Server launch
+```
+
+### Trade-offs and Improvements
+
+| Area             | Current Implementation          | Future Improvement                             |
+| ---------------- | ------------------------------- | ---------------------------------------------- |
+| API Reviews      | Mocked via Fishery              | Add live end-to-end testing with real data     |
+| State Management | React Context                   | Migrate to Redux for scalable state handling   |
+| Map Component    | Leaflet                         | Replace with Google Maps for advanced features |
+| Test Coverage    | Unit + Cypress functional tests | Add backend integration and full E2E tests     |
+| Docker Setup     | Dev environment only            | Add production-ready Dockerfile and config     |
+| Code Reusability | Places API logic in services    | Refactor into shared module/interface          |
