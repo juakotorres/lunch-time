@@ -189,6 +189,9 @@ Opted to use React Context for shared state. Redux would offer better structure 
 
 ```
 /src
+  ├── config/      # Environment variable loading
+  ├── controllers/ # Request handlers that process input and return responses
+  ├── middleware/  # Express middleware functions for error handling
   ├── routes/      # Express route definitions
   ├── services/    # Abstractions for external API calls (e.g., Google Places)
   ├── utils/       # Helper functions

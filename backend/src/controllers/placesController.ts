@@ -1,16 +1,16 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { fetchNearbyPlaces } from '../services/searchNearbyService';
 import { fetchPlacesByText } from '../services/searchTextService';
+import { AppError } from '../middleware/errorHandler';
 
-export async function getPlaces(req: Request, res: Response): Promise<void> {
+export async function getPlaces(req: Request, res: Response, next: NextFunction): Promise<void> {
   const { lat, lng, radius, type, query } = req.query;
 
-  if (!lat || !lng) {
-    res.status(400).json({ error: 'lat and lng are required' });
-    return;
-  }
-
   try {
+    if (!lat || !lng) {
+      throw new AppError('Latitude and longitude are required', 400);
+    }
+
     if (query && query !== '') {
       const data = await fetchPlacesByText(
         lat.toString(),
@@ -30,7 +30,6 @@ export async function getPlaces(req: Request, res: Response): Promise<void> {
       res.status(200).json(data);
     }
   } catch (error) {
-    console.error('Error fetching Places data:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    next(error);
   }
 }

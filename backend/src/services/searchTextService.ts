@@ -1,6 +1,7 @@
 import { PlaceSearchResponse } from '../utils/places';
 import { API_KEY } from '../config/env';
 import { fetch } from '../utils/fetch';
+import { AppError } from '../middleware/errorHandler';
 
 const PLACES_API_TEXT_SEARCH = 'https://places.googleapis.com/v1/places:searchText';
 
@@ -39,7 +40,7 @@ export async function fetchPlacesByText(
   });
 
   if (!response.ok) {
-    throw new Error(`Place API error: ${response.statusText}`);
+    throw new AppError(`Place API error: ${response.statusText}`, 500);
   }
 
   const data = (await response.json()) as PlaceSearchResponse;
