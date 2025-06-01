@@ -14,6 +14,7 @@ export interface PlaceSearchResult {
   };
   rating: number;
   userRatingCount: number;
+  googleMapsUri: string;
   nationalPhoneNumber?: string;
   reviews?: PlaceReview[];
   photos?: PlacePhoto[];

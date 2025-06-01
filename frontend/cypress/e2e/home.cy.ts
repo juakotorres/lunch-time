@@ -1,12 +1,11 @@
 import placeSearchResponseFactory from 'factory/place-search-response';
 import placeSearchResultFactory from 'factory/place-search-result';
 import { mockPlaceSearch, mockPlaceSearchError } from 'intercepts/places';
+import { LEAFLET_MARKER_CLASS_PATTERN } from 'support/leaftlet';
 
 describe('Home Page', () => {
   const PLACE_SEARCH_RESULTS = placeSearchResultFactory.buildList(20);
   const PLACE_SEARCH_RESPONSE = placeSearchResponseFactory.build({ places: PLACE_SEARCH_RESULTS });
-  // In case leaflet updates and change the class we can update it from here.
-  const LEAFLET_MARKER_CLASS_PATTERN = '*[class^="leaflet-marker-icon"]';
 
   context('fetch successfully', () => {
     beforeEach(() => {
@@ -29,14 +28,14 @@ describe('Home Page', () => {
             .should('be.visible')
             .within(() => {
               // We cannot add data-cy to leaflet marker, so we get it by class
-              cy.get(LEAFLET_MARKER_CLASS_PATTERN).should('have.length', 20);
+              cy.get(LEAFLET_MARKER_CLASS_PATTERN).should('have.length', 21);
             });
         });
     });
 
     it('clicking on a marker shows a tooltip with the information', () => {
       // Due to the randomness of the location pin some can overlap. We use the force to click it even if it overlaps.
-      cy.get(LEAFLET_MARKER_CLASS_PATTERN).eq(0).click({ force: true });
+      cy.get(LEAFLET_MARKER_CLASS_PATTERN).eq(1).click({ force: true });
       cy.dataCy('map-container').within(() => {
         cy.contains(`${PLACE_SEARCH_RESULTS[0].displayName.text}`).should('be.visible');
       });
@@ -53,7 +52,7 @@ describe('Home Page', () => {
       cy.dataCy('search-input').type('Restaurant 1', { delay: 0 });
       cy.dataCy('place-card').should('have.length', 5);
 
-      cy.get(LEAFLET_MARKER_CLASS_PATTERN).eq(0).click({ force: true });
+      cy.get(LEAFLET_MARKER_CLASS_PATTERN).eq(1).click({ force: true });
       cy.dataCy('map-container').within(() => {
         cy.contains(`${searchFilterResults.places[0].displayName.text}`).should('be.visible');
       });

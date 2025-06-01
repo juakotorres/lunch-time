@@ -6,6 +6,7 @@ import placePhotoMediaResponseFactory from 'factory/place-photo-media-response';
 import { mockFetchPlaceDetails, mockPlaceSearch } from 'intercepts/places';
 import { mockReviewAvatar } from 'intercepts/reviews';
 import { mockPlacePhoto, mockPlacePhotoMedia } from 'intercepts/photos';
+import { LEAFLET_MARKER_CLASS_PATTERN } from 'support/leaftlet';
 
 describe('Place Details', () => {
   const PLACE_SEARCH_RESULTS = placeSearchResultFactory.buildList(20);
@@ -38,6 +39,13 @@ describe('Place Details', () => {
     cy.dataCy('place-card').eq(0).click();
     cy.wait('@getPlaceDetails');
 
+    cy.get(LEAFLET_MARKER_CLASS_PATTERN)
+      .eq(1)
+      .should('have.attr', 'src')
+      .then((src) => {
+        expect(src).to.include('selected-location');
+      });
+
     cy.dataCy('place-details').should('be.visible');
     cy.dataCy('photo-tab').should('have.class', 'active');
     cy.dataCy('review-tab').should('not.have.class', 'active');
@@ -57,6 +65,16 @@ describe('Place Details', () => {
       .should('be.visible')
       .within(() => {
         cy.dataCy('review-item').should('have.length', 5);
+      });
+
+    cy.dataCy('back-arrow').click();
+    cy.dataCy('place-details').should('not.exist');
+
+    cy.dataCy('left-panel')
+      .should('be.visible')
+      .within(() => {
+        cy.dataCy('logo-icon').should('be.visible');
+        cy.dataCy('place-card').should('have.length', 20);
       });
   });
 });

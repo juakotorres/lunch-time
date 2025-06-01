@@ -13,6 +13,7 @@ const placeSearchResultFactory = Factory.define<PlaceSearchResult>(({ sequence }
   formattedAddress: `address_${sequence}`,
   rating: 1,
   userRatingCount: 100,
+  googleMapsUri: 'google_maps_uri',
 }));
 
 export default placeSearchResultFactory;

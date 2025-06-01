@@ -11,7 +11,7 @@ export async function fetchPlaceDetails(placeId: string): Promise<PlaceSearchRes
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask':
-        'displayName,id,formattedAddress,nationalPhoneNumber,rating,userRatingCount,photos.name,reviews.rating,reviews.text,reviews.relativePublishTimeDescription,reviews.authorAttribution.displayName,reviews.authorAttribution.photoUri',
+        'displayName,id,formattedAddress,nationalPhoneNumber,rating,userRatingCount,googleMapsUri,photos.name,reviews.rating,reviews.text,reviews.relativePublishTimeDescription,reviews.authorAttribution.displayName,reviews.authorAttribution.photoUri',
     },
   });
 

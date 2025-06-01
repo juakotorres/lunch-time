@@ -1,10 +1,13 @@
 import { SearchProvider } from './contexts/SearchContext';
+import { SelectedPlaceProvider } from './contexts/SelectedLocationContext';
 import HomePage from './pages/HomePage/HomePage';
 
 function App() {
   return (
     <SearchProvider>
-      <HomePage />
+      <SelectedPlaceProvider>
+        <HomePage />
+      </SelectedPlaceProvider>
     </SearchProvider>
   );
 }

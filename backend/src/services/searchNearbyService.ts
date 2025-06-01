@@ -1,6 +1,7 @@
 import { PlaceSearchResponse } from '../utils/places';
 import { API_KEY } from '../config/env';
 import { fetch } from '../utils/fetch';
+import { getRandomOffsetLocation } from '../utils/getRandomOffset';
 
 const PLACES_API_NEARBY = 'https://places.googleapis.com/v1/places:searchNearby';
 
@@ -9,14 +10,20 @@ export async function fetchNearbyPlaces(
   longitude: string,
   type = 'restaurant',
   radius = 1000,
-  limit = 10
+  limit = 20
 ): Promise<PlaceSearchResponse> {
+  const { latitude: randomLatitude, longitude: randomLongitude } = getRandomOffsetLocation(
+    parseFloat(latitude),
+    parseFloat(longitude),
+    radius
+  );
+
   const body = {
     locationRestriction: {
       circle: {
         center: {
-          latitude: parseFloat(latitude),
-          longitude: parseFloat(longitude),
+          latitude: randomLatitude,
+          longitude: randomLongitude,
         },
         radius: radius,
       },
@@ -31,7 +38,7 @@ export async function fetchNearbyPlaces(
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask':
-        'places.displayName,places.id,places.formattedAddress,places.location,places.rating,places.userRatingCount',
+        'places.displayName,places.id,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.googleMapsUri',
     },
     body: JSON.stringify(body),
   });
