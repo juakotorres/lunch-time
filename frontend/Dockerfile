@@ -10,7 +10,8 @@ RUN npm install
 ENV WATCHPACK_POLLING=true
 ENV FAST_REFRESH=true
 
-COPY . .
+COPY src ./src
+COPY public ./public
 
 EXPOSE 3000
 
