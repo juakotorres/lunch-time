@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchPlacePhoto } from '../../../api/search';
-import imagePlaceholder from '../../../assets/image_placeholder.png';
+import imagePlaceholder from '../../../assets/image-placeholder.png';
 import './PlaceImage.css';
 
 interface PlaceImageProps {

@@ -5,6 +5,20 @@
   gap: 4px;
 }
 
+.place-details-menu {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  gap: 8px;
+}
+
+.place-details-metadata {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+}
+
 .place-name {
   font-size: 16px;
   color: var(--color-on-surface);
@@ -13,4 +27,19 @@
 .place-address {
   font-size: 12px;
   color: var(--color-outline);
+}
+
+.google-maps-button-container {
+  width: 30px;
+  border-radius: 12px;
+}
+
+.google-maps-button-container:hover img {
+  transform: scale(1.1);
+}
+
+.google-maps-button {
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
